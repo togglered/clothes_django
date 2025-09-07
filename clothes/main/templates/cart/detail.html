@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Корзина{% endblock title %}
+
+{% block content %}
+{% if cart %}
+    {% for size in cart %}
+        <form action="{% url 'cart:remove' id=size.id %}" method="POST">
+            {% csrf_token %}
+            <div class="cart-item">
+                <div class="d-flex align-items-center gap-5">
+                    <img class="cart-item-img" src="{{ size.product.image.url }}" width="130" height="130">
+                    <p class="name">
+                        {{ size.product.name }}
+                    </p>
+                    <p class="size">
+                        {{ size.size }}
+                    </p>
+                </div>
+                <div class="d-flex align-items-center gap-5">
+                    <p class="price">
+                        {{ size.product.price }} €
+                    </p>
+                    <button type="submit">
+                        УДАЛИТЬ
+                    </button>
+                </div>
+            </div>
+        </form>
+    {% endfor %}
+    <form action="{% url 'cart:create_order' %}" method="POST">
+        {% csrf_token %}
+        <div class="order">
+            <div class="cart-total">
+                <div class="total">
+                    TOTAL
+                </div>
+                <div class="d-flex justify-content-center align-items-center gap-5">
+                    <p class="price">
+                        {{ cart_sum }} €
+                    </p>
+                </div>
+            </div>
+            <button>
+                ОПЛАТИТЬ
+            </button>
+        </div>
+    </form>
+{% else %}
+    <div class="empty-cart">
+        <h1>
+            ВАША КОРЗИНА ПУСТА
+        </h1>
+    </div>
+{% endif %}
+{% endblock content %}

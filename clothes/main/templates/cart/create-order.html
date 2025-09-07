@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Создать заказ{% endblock title %}
+
+{% block content %}
+    <form action="{% url "cart:pay" %}" method="POST">
+        {% csrf_token %}
+        <div class="order-form">
+            <div class="section">
+                <div class="input">
+                    <label for="name">Имя</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="input">
+                    <label for="surname">Фамилия</label>
+                    <input type="text" name="surname">
+                </div>
+            </div>
+            <div class="input">
+                <label for="city">Город</label>
+                <input type="text" name="city">
+            </div>
+            <div class="input">
+                <label for="street">Улица</label>
+                <input type="text" name="street">
+            </div>
+            <div class="section">
+                <div class="input">
+                    <label for="house">Дом</label>
+                    <input type="text" name="house">
+                </div>
+                <div class="input">
+                    <label for="flat">Квартира</label>
+                    <input type="text" name="flat">
+                </div>
+            </div>
+            <div class="input">
+                <label for="email">Почта</label>
+                <input type="email" name="email">
+            </div>
+            <button>
+                ОПЛАТИТЬ {{ cart_sum }} €
+            </button>
+        </div>
+    </form>
+{% endblock content %}

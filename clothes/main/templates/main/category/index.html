@@ -1,0 +1,46 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+    <select id="sort-select" onchange="open_link_with_params(['sorted'], [this.value])">
+        <option value="">Сортировка</option>
+        <option value="?">Случайно</option>
+        <option value="-created">Сначала новые</option>
+        <option value="created">Сначала старые</option>
+    </select>
+    <div class="d-flex justify-content-center">
+        <div class="product-list">
+            {% for product in products %}
+                <a href="{{ product.get_absolute_url }}">
+                    <div class="product-card">
+                        <img src="{{ product.image.url }}" alt="" width="200" height="200" >
+                        <div>
+                            <p>
+                                {{ product.name }}
+                            </p>
+                            <p>
+                                {{ product.price }} €
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <ul class="paginator">
+        {% for page in pages %}
+            {% if page >= current_page|add:-2 and page <= current_page|add:2 %}
+                <li class="paginator-btn">
+                    <button class="{% if current_page == page %}disabled{% endif %}"
+                    {% if not current_page == page %}onclick="open_link_with_params(['page'], [{{ page }}])"{% endif %}>
+                        <a href="##" class="{% if current_page == page %}disabled{% endif %}">
+                            {{ page }}
+                        </a>
+                    </button>
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% endblock content %}

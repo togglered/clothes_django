@@ -1,0 +1,42 @@
+{% extends "main/base.html" %}
+{% load static %}
+
+{% block title %}{{ product.name }}{% endblock title %}
+
+{% block content %}
+    <div class="product-info-card">
+        <img class="product-img" src="{{ product.image.url }}" width="600" height="900">
+        <div class="product-info">
+            <div class="product-name">
+                <h4>
+                    {{ product.name }}
+                </h4>
+                <h4>
+                    {{ product.price }} €
+                </h4>
+            </div>
+            <h4 class="product-description">
+                {{ product.description }}
+            </h4>
+            <form action="{% url 'cart:add' id=product.id %}" method="post">
+                {% csrf_token %}
+                <div class="d-flex gap-4">
+                    <select class="size-select" name="size" id="">
+                        {% for size in sizes %}
+                            {% if size.stock > 0 %}
+                                <option value="{{ size.id }}">{{ size.size }} ({{ size.stock }})</option>
+                            {% else %}
+                                <option value="{{ size.id }}" disabled>{{ size.size }} (0)</option>
+                            {% endif %}
+                        {% endfor %}
+                    </select>
+                    <button class="buy-btn">
+                        <h5 class="m-0">
+                            В КОРЗИНУ
+                        </h5>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock content %}

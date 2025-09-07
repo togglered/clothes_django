@@ -1,0 +1,66 @@
+{% extends "main/base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <div class="slideshow-box">
+        <div class="slideshow">
+            {% for product in products %}
+                <div class="slide" data-link="{{ product.get_absolute_url }}">
+                    <div class="info">
+                        <p>
+                            {{ product.name }}
+                        </p>  
+                        <p>
+                            {{ product.price }} €
+                        </p>
+                    </div>
+                    <img src="{{ product.image.url }}" width="550" height="550">
+                </div>
+            {% endfor %}
+        </div>
+        <div class="slide-selector">
+            {% for product in products %}
+                <div class="slide-mini">
+                    <img src="{{ product.image.url }}" width="193" height="193">
+                    <div class="info">
+                        <p>
+                            {{ product.name }}
+                        </p>  
+                        <p>
+                            {{ product.price }} €
+                        </p>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="main-category-list">
+        {% for category in categories %}
+            {% for subcategory in category.subcategories.all %}
+            <div class="stripe"></div>
+            <h1>
+                {{ category.name }} {{ subcategory.name }}
+            </h1>
+            <div class="main-product-list">
+                {% for product in subcategory.products.all %}
+                    <a href="{{ product.get_absolute_url }}">
+                        <div class="product-card">
+                            <img src="{{ product.image.url }}" alt="" width="200" height="200" >
+                            <div>
+                                <p>
+                                    {{ product.name }}
+                                </p>
+                                <p>
+                                    {{ product.price }} €
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+    <script src={% static 'js/index/script.js' %}></script>
+{% endblock content %}

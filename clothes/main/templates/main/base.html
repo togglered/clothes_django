@@ -1,0 +1,81 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>{% block title %}Lorem Ipsum{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+</head>
+<body>
+    <header class="sticky-top header">
+            <ul class="nav-list container">
+                <li class="nav-item">
+                    <a href="{% url "main:index" %}">
+                        <div class="logo">
+                            <h1>
+                                Lorem Ipsum
+                            </h1>
+                        </div>
+                    </a>
+                </li>
+                <li class="nav-item category-btn">
+                    <a href="#">
+                        <div class="">
+                            <h1>
+                                КАТЕГОРИИ
+                            </h1>
+                        </div>
+                    </a>
+                <div class="category-list">
+                    <ul>
+                    {% for category in categories %}
+                        <li class="category-item">
+                            <div class="category-choice">{{ category.name }}
+                                <div class="subcategory-list">
+                                    <ul>
+                                        {% for subcategory in category.subcategories.all %}
+                                            <li>
+                                                <a href="{{ subcategory.get_absolute_url}}">
+                                                    {{ subcategory.name }}
+                                                </a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    </ul>
+                </div>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url "cart:cart_detail" %}">
+                        <div class="">
+                            <h1>
+                                КОРЗИНА
+                            </h1>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        <div class="stripe">
+
+        </div>
+    </header> 
+    <div class="container fade-in">
+        {% block content %}{% endblock content %}
+    </div>
+    <footer>
+        <h1>
+            Lorem Ipsum
+        </h1>
+        <div>
+
+        </div>
+        <div>
+            
+        </div>
+    </footer>
+    <script src={% static 'js/script.js' %}></script>
+</body>
+</html>
